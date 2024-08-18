@@ -2,4 +2,6 @@
     <string name="app_name">Location App</string>
     <string name="latitude_text">Latitude: %1$s</string>
     <string name="longitude_text">Longitude: %1$s</string>
+    <string name="latitude_label">Latitude:</string>
+    <string name="longitude_label">Longitude:</string>
 </resources>

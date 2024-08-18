@@ -60,7 +60,14 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         ) == PackageManager.PERMISSION_GRANTED
 
         if (hasFineLocationPermission || hasCoarseLocationPermission) {
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                locationManager.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    0L,
+                    0f,
+                    locationListener
+                )
+            } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 locationManager.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     0L,
@@ -69,11 +76,13 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                 )
             }
 
-
+            // Coroutine to update location every 10 minutes
             viewModelScope.launch {
                 while (true) {
                     delay(10 * 60 * 1000L) // 10 minutes
-                    if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, locationListener, null)
+                    } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, null)
                     }
                 }
