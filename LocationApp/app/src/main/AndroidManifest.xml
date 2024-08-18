@@ -15,7 +15,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA6bV99IGJn2UyKLaHGe9zyBGsEbqF5kOE"/>
+            android:value="for security I remove my API"/>
 
         <activity
             android:name=".MainActivity"
